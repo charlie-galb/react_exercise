@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import RecipeList from '../../containers/RecipeList/RecipeList'
 import Recipe from '../../types/Recipe'
+import Section from '../../components/Section/Section'
 
 const Home = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([])
@@ -17,7 +18,9 @@ const Home = () => {
     }, [])
 
     return (
-        <RecipeList recipes={recipes} />
+        <Section>
+            <RecipeList recipes={recipes} />
+        </Section>
     )
 }
 
