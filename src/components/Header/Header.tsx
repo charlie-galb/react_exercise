@@ -1,5 +1,18 @@
 import styled from "styled-components";
 
-export default styled.h1`
+interface Props {
+    children: React.ReactNode
+}
+
+const Header: React.FC<Props> = (props: Props) => {
+    const { children } = props
+    return (
+        <HeaderText>{children}</HeaderText>
+    )
+}
+
+const HeaderText = styled.h1`
     background-color: red;
 `
+
+export default Header
