@@ -1,12 +1,14 @@
 import React from 'react';
 
-import Header from './components/Header/Header'
+import GlobalStyle from './GlobalStyle';
+import AppHeader from './components/Header/Header'
 
 const App = () => {
   return (
-    <div className="App">
-      <Header>Recipe Manager</Header>
-    </div>
+    <>
+      <GlobalStyle />
+      <AppHeader>Recipe Manager</AppHeader>
+    </>
   );
 }
 
