@@ -4,6 +4,7 @@ import axios from 'axios'
 import RecipeList from '../../containers/RecipeList/RecipeList'
 import Recipe from '../../types/Recipe'
 import Section from '../../components/Section/Section'
+import Button from '../../components/Button/Button'
 
 const Home = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([])
@@ -18,9 +19,14 @@ const Home = () => {
     }, [])
 
     return (
-        <Section>
-            <RecipeList recipes={recipes} />
-        </Section>
+        <>  
+            <Section>
+                <RecipeList recipes={recipes} />
+            </Section>
+            <Section>
+                <Button>Create a new recipe</Button>
+            </Section>
+        </>
     )
 }
 
