@@ -1,11 +1,11 @@
 import React from 'react';
 
-import HeaderText from './components/HeaderText'
+import Header from './components/Header/Header'
 
 const App = () => {
   return (
     <div className="App">
-      <HeaderText>Recipe Manager</HeaderText>
+      <Header>Recipe Manager</Header>
     </div>
   );
 }
