@@ -1,3 +1,5 @@
+import styled, { css } from 'styled-components'
+
 import Link from '../../components/Link/Link'
 import Recipe from '../../types/Recipe'
 
@@ -10,7 +12,7 @@ const RecipeList = (props: Props) => {
     const { recipes } = props
 
     return (
-        <ul>
+        <StyledList>
             {recipes?.map((recipe, idx) => {
                 return (
                 <li key={idx}>
@@ -18,8 +20,12 @@ const RecipeList = (props: Props) => {
                 </li>
                 )
             })}
-        </ul>
+        </StyledList>
     )
 }
+
+const StyledList = styled.ul`
+    list-style-type: none;
+`
 
 export default RecipeList
