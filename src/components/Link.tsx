@@ -7,11 +7,11 @@ interface Props {
 const Link: React.FC<Props> = (props: Props) => {
     const { children } = props
     return (
-        <LinkText>{children}</LinkText>
+        <StyledLink href='#'>{children}</StyledLink>
     )
 }
 
-const LinkText = styled.a`
+const StyledLink = styled.a`
     color: green;
 `
 

@@ -13,8 +13,11 @@ const Section: React.FC<Props> = (props: Props) => {
 }
 
 const StyledSection = styled.section`
-    background-color: yellow;
-    margin: auto;
+    border: solid black 2px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 10px;
     width: 80%;
 `
