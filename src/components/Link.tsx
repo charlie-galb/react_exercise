@@ -2,12 +2,13 @@ import styled from "styled-components"
 
 interface Props {
     children: React.ReactNode
+    href: string
 }
 
 const Link: React.FC<Props> = (props: Props) => {
-    const { children } = props
+    const { children, href } = props
     return (
-        <StyledLink href='#'>{children}</StyledLink>
+        <StyledLink href={href}>{children}</StyledLink>
     )
 }
 
