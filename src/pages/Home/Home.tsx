@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import RecipeList from '../../containers/RecipeList/RecipeList'
 import Recipe from '../../types/Recipe'
-import Section from '../../components/Section/Section'
-import Button from '../../components/Button/Button'
+import Section from '../../components/Section'
+import Button from '../../components/Button'
 
 const Home = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([])
+    const history = useHistory()
+
+    const handleClick = () => {
+        history.push('/create_recipe')
+    }
 
     useEffect(() => {
         axios.get<Recipe[]>('/api/recipe/recipes/')
@@ -24,7 +30,7 @@ const Home = () => {
                 <RecipeList recipes={recipes} />
             </Section>
             <Section>
-                <Button>Create a new recipe</Button>
+                <Button onClick={handleClick}>Create a new recipe</Button>
             </Section>
         </>
     )
