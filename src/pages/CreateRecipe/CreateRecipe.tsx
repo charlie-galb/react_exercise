@@ -12,7 +12,7 @@ const CreateRecipe = () => {
 
     const handleSubmit = (event: React.FormEvent): void => {
         event.preventDefault()
-        axios.post('/api/recipes/', {
+        axios.post('/api/recipe/recipes/', {
             name: name,
             description: description,
             ingredients: ingredients
@@ -33,15 +33,41 @@ const CreateRecipe = () => {
         setIngredients([...currentIngredients])
     }
 
+    const handleAddIngredient = (event: React.FormEvent) => {
+        event.preventDefault()
+        let currentIngredients = [...ingredients]
+        setIngredients([...currentIngredients, {'name': ''}])
+    }
+
+    const handleRemoveIngredient = (event: React.FormEvent) => {
+        event.preventDefault()
+        let currentIngredients = ingredients
+        currentIngredients.pop()
+        setIngredients([...currentIngredients])
+    }
+
     return (
         <Form>
-            <Input type='text' placeholder='Name' value={name} onChange={handleNameChange}></Input>
-            <Input type='text' placeholder='Description' value={description} onChange={handleDescriptionChange}></Input>
-            {ingredients && ingredients.map((ingredient, index) => (
+            <Input type='text' 
+            placeholder='Name' 
+            value={name} 
+            onChange={handleNameChange} />
+            <Input type='text' 
+            placeholder='Description' 
+            value={description} 
+            onChange={handleDescriptionChange} />
+            {ingredients.map((ingredient, index) => (
                 <span key={index}>
-                    <Input type='text' placeholder='Ingredients' value={ingredients} onChange={handleIngredientsChange(index)}></Input>
+                    <Input 
+                    type='text' 
+                    data-testid={`ingredient${index+1}`}
+                    placeholder='Name of ingredient' 
+                    value={ingredient.name} 
+                    onChange={handleIngredientsChange(index)} />
                 </span>
             ))}
+            <Button onClick={handleAddIngredient}>Add ingredient</Button>
+            <Button onClick={handleRemoveIngredient}>Remove ingredient</Button>
             <Button submit={true} primary={true} onClick={handleSubmit}>Submit</Button>
         </Form>
     )
