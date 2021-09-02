@@ -5,6 +5,7 @@ import GlobalStyle from './GlobalStyle';
 import AppHeader from './components/Header'
 import Home from './pages/Home/Home'
 import CreateRecipe from './pages/CreateRecipe/CreateRecipe'
+import Recipe from './pages/Recipe/Recipe'
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
       <AppHeader>Recipe Manager</AppHeader>
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route path='/Create_recipe' component={CreateRecipe} />
+        <Route path='/create_recipe' component={CreateRecipe} />
+        <Route path='/:id' component={Recipe}/>
       </Switch>
     </Router>
   );
