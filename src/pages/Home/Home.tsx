@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import axios from 'axios'
 
 import RecipeList from '../../containers/RecipeList/RecipeList'
 import Recipe from '../../types/Recipe'
 import Section from '../../components/Section'
 import Button from '../../components/Button'
+import retrieveRecipes from '../../api/retrieveRecipes'
 
 const Home = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([])
@@ -16,12 +16,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        axios.get<Recipe[]>('/api/recipe/recipes/')
-        .then(response => {
-            console.log(JSON.stringify(response.data))
-            setRecipes(response.data)
-        })
-        .catch(error => console.error(error))
+        retrieveRecipes(setRecipes)
     }, [])
 
     return (
