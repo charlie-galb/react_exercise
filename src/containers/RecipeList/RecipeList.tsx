@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import Link from '../../components/Link/Link'
+import Link from '../../components/Link'
 import Recipe from '../../types/Recipe'
 
 interface Props {

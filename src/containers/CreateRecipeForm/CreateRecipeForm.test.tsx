@@ -1,15 +1,15 @@
 import { render, fireEvent, screen } from '@testing-library/react'
 import axios from 'axios'
 
-import CreateRecipe from './CreateRecipe'
+import CreateRecipeForm from './CreateRecipeForm'
 
 jest.mock('axios')
 
-const url = "/api/recipes/"
+const url = "/api/recipe/recipes/"
 
 const inputAllFields = () => {
     const { getByPlaceholderText, getByTestId, getByText } = render(
-        <CreateRecipe />
+        <CreateRecipeForm />
     )
     const nameField = getByPlaceholderText('Name')
     const descriptionField = getByPlaceholderText('Description')
@@ -26,7 +26,7 @@ const inputAllFields = () => {
         }})
 }
 
-describe('CreateRecipe page', () => {
+describe('CreateRecipeForm', () => {
     it('Sends a post request to backend on submit', () => {
         inputAllFields()
         fireEvent.click(screen.getByText('Submit'))
