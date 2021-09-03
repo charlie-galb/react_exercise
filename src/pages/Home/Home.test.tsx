@@ -7,19 +7,15 @@ import renderWithRouter from '../../utils/testUtils/renderWithRouter'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
+const mockRecipes = recipeArr
 
 describe('Home', () => {
-    it('retrieves recipes from backend upon rendering', async () => {
-        mockedAxios.get.mockResolvedValue({data: recipeArr})
-        await act(() => Promise.resolve())
-        render(
-            <Home />
-        )
-        expect(mockedAxios.get).toHaveBeenCalledTimes(1)
-    })
     it('redirects when the "Create a new recipe" button is clicked', async () => {
         mockedAxios.get.mockResolvedValue({data: recipeArr})
-        const { getByText, history } = renderWithRouter(<Home />, '/')
+        const { getByText, history } = renderWithRouter(
+        <Home recipes={mockRecipes} />,
+        '/'
+        )
         await act(() => Promise.resolve())
         const btn = getByText('Create a new recipe')
         fireEvent.click(btn)
