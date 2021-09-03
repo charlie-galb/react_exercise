@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const SubHeaderText = styled.h2`
+const SubHeaderText = styled.h3`
     text-align: center;
 `
 

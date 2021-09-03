@@ -1,18 +1,6 @@
 import styled from "styled-components"
 
-interface Props {
-    children?: React.ReactNode
-
-}
-
-const Section: React.FC<Props> = (props: Props) => {
-    const { children } = props
-    return (
-        <StyledSection>{children}</StyledSection>
-    )
-}
-
-const StyledSection = styled.section`
+const Section = styled.section`
     border: solid black 2px;
     margin-left: auto;
     margin-right: auto;

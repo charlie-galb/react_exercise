@@ -1,4 +1,4 @@
-import { Link, List } from '../../components'
+import { Link, List, SubHeaderText, FlexContainer } from '../../components'
 import Recipe from '../../types/Recipe'
 
 interface Props {

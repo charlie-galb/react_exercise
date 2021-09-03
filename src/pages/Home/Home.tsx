@@ -2,8 +2,7 @@ import { useHistory } from 'react-router-dom'
 import { RouteComponentProps } from '@reach/router'
 
 import RecipeList from '../../containers/RecipeList/RecipeList'
-import Section from '../../components/Section'
-import Button from '../../components/Button'
+import { Section, Button, HeaderText } from '../../components'
 import Recipe from '../../types/Recipe'
 
 interface Props extends RouteComponentProps {
@@ -21,6 +20,7 @@ const Home = (props: Props) => {
 
     return (
         <>  
+            <HeaderText>My Recipes</HeaderText>
             <Section>
                 <RecipeList recipes={recipes} />
             </Section>
