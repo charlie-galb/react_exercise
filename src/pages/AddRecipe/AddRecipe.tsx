@@ -30,7 +30,9 @@ const AddRecipe = (props: Props) => {
     }
 
     return (
-        <RecipeForm onSubmit={createAndAddToRecipes}/>
+        <>
+            <RecipeForm onSubmit={createAndAddToRecipes}/>
+        </>
     )
 }
 
