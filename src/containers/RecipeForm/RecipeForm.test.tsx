@@ -6,16 +6,13 @@ import renderWithRouter from '../../utils/testUtils/renderWithRouter'
 
 describe('RecipeForm', () => {
 
-    const mockSendToBackend = jest.fn()
+    const mockOnSubmit = jest.fn()
     const mockSetRecipes = jest.fn()
 
 
     const fillOutFields = () => {
         const component = renderWithRouter(
-            <RecipeForm 
-            sendToBackend={mockSendToBackend}
-            recipes={recipeArr}
-            setRecipes={mockSetRecipes} />,
+            <RecipeForm onSubmit={mockOnSubmit} />,
             '/add_recipe'
         )
         const nameField = screen.getByPlaceholderText('Name')
@@ -35,19 +32,14 @@ describe('RecipeForm', () => {
 
 
     it('Leaves the fields blank if no values are passed in as props', () => {
-        render(<RecipeForm
-            sendToBackend={mockSendToBackend}
-            recipes={recipeArr}
-            setRecipes={mockSetRecipes}/>)
+        render(<RecipeForm onSubmit={mockOnSubmit} />)
         expect(screen.getByPlaceholderText('Name')).toHaveValue('')
         expect(screen.getByPlaceholderText('Description')).toHaveValue('')
         expect(screen.getByTestId('ingredient1')).toHaveValue('')
     })
     it('Populates the fields with values passed in as props', () => {
         render(<RecipeForm
-            sendToBackend={mockSendToBackend}
-            recipes={recipeArr}
-            setRecipes={mockSetRecipes}
+            onSubmit={mockOnSubmit}
             recipe={recipe1}
             />)
         expect(screen.getByPlaceholderText('Name')).toHaveValue(recipe1.name)
@@ -57,16 +49,12 @@ describe('RecipeForm', () => {
     it('Sends request to backend on submit and redirects to home', async () => {
         const { history } = fillOutFields()
         fireEvent.click(screen.getByText('Submit'))
-        expect(mockSendToBackend).toHaveBeenCalledTimes(1)
-        expect(mockSendToBackend).toHaveBeenCalledWith({
-            name: 'Bangers and mash',
-            description: 'Cook sausages and mashed potato and mix together.',
-            ingredients: [
-                {name: 'Bangers'}
-            ]
-        })
-        await act(() => Promise.resolve())
-        expect(history.location.pathname).toEqual('/')
+        expect(mockOnSubmit).toHaveBeenCalledTimes(1)
+        expect(mockOnSubmit).toHaveBeenCalledWith(
+            'Bangers and mash',
+            'Cook sausages and mashed potato and mix together.',
+            [{name: 'Bangers'}]
+        )
     })
     it('Allows the user to add multiple ingredients', () => {
         fillOutFields()
@@ -77,15 +65,15 @@ describe('RecipeForm', () => {
                 value: 'Mash'
             }})
         fireEvent.click(screen.getByText('Submit'))
-        expect(mockSendToBackend).toHaveBeenCalledTimes(1)
-        expect(mockSendToBackend).toHaveBeenCalledWith({
-            name: 'Bangers and mash',
-            description: 'Cook sausages and mashed potato and mix together.',
-            ingredients: [
+        expect(mockOnSubmit).toHaveBeenCalledTimes(1)
+        expect(mockOnSubmit).toHaveBeenCalledWith(
+            'Bangers and mash',
+            'Cook sausages and mashed potato and mix together.',
+            [
                 {name: 'Bangers'},
                 {name: 'Mash'}
             ]
-        })
+        )
     })
     it('Allows the user to remove ingredients', () => {
         fillOutFields()
@@ -97,13 +85,13 @@ describe('RecipeForm', () => {
             }})
         fireEvent.click(screen.getByText('Remove ingredient'))
         fireEvent.click(screen.getByText('Submit'))
-        expect(mockSendToBackend).toHaveBeenCalledTimes(1)
-        expect(mockSendToBackend).toHaveBeenCalledWith({
-            name: 'Bangers and mash',
-            description: 'Cook sausages and mashed potato and mix together.',
-            ingredients: [
+        expect(mockOnSubmit).toHaveBeenCalledTimes(1)
+        expect(mockOnSubmit).toHaveBeenCalledWith(
+            'Bangers and mash',
+            'Cook sausages and mashed potato and mix together.',
+            [
                 {name: 'Bangers'}
             ]
-        })
+        )
     })
 })

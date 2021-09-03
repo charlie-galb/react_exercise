@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, useRouteMatch } from 'react-router-dom';
 import { RouteComponentProps } from '@reach/router'
 
-import retrieveRecipe from '../../api/retrieveRecipe'
+import retrieveAndSetRecipe from '../../utils/retrieveAndSetRecipe'
 import deleteRecipe from '../../api/deleteRecipe'
 import RecipeType from '../../types/Recipe'
 import Ingredient from '../../types/Ingredient'
@@ -15,15 +15,18 @@ interface Props extends RouteComponentProps {
 
 const Recipe = (props: Props) => {
     const { id } = useParams<{ id: string }>()
-    const [recipe, setRecipe] = useState<RecipeType | null>()
+    const [recipe, setRecipe] = useState<RecipeType>()
     const { recipes, setRecipes } = props
     const history = useHistory()
+
+    const handleUpdate = () => {
+        history.push(`/${id}/update`)
+    }
 
     const handleDelete = async (event: React.FormEvent) => {
         event.preventDefault()
         try {
             await deleteRecipe(id)
-            console.log('In Delete!')
             const currentId = parseInt(id)
             let newRecipes = recipes
             newRecipes = newRecipes.filter((recipe: RecipeType) => recipe.id !== currentId)
@@ -34,18 +37,9 @@ const Recipe = (props: Props) => {
         }
     }
 
-    const retrieveAndSetRecipe = async () => {
-        try {
-            const retrievedRecipe = await retrieveRecipe(id)
-            setRecipe(retrievedRecipe)
-        } catch(err) {
-            console.error(err)
-        }
-    }
-
     useEffect(() => {
-        retrieveAndSetRecipe()
-    }, [id])
+        retrieveAndSetRecipe(id, setRecipe)
+    }, [])
 
     return (
         <>
@@ -65,6 +59,7 @@ const Recipe = (props: Props) => {
             </Section>
             <Section>
                 <Button onClick={handleDelete}>Delete</Button>
+                <Button onClick={handleUpdate}>Update</Button>
             </Section>
         </>
     )

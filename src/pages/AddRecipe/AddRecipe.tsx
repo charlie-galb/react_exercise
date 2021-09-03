@@ -12,8 +12,25 @@ interface Props extends RouteComponentProps {
 
 const AddRecipe = (props: Props) => {
     const { recipes, setRecipes } = props
+    const history = useHistory()
+
+    const createAndAddToRecipes = async (name: string, description: string, ingredients: object[]) => {
+        const currentRecipes = recipes
+        try {
+            const newRecipe = await createRecipe({
+                name: name,
+                description: description,
+                ingredients: ingredients
+            })
+            setRecipes([...currentRecipes, newRecipe])
+            history.push('/')
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     return (
-        <RecipeForm recipes={recipes} setRecipes={setRecipes} sendToBackend={createRecipe}/>
+        <RecipeForm onSubmit={createAndAddToRecipes}/>
     )
 }
 

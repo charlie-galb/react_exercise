@@ -1,39 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 
 import { Form, Button, Input} from '../../components'
 import Recipe from '../../types/Recipe'
-import RecipeList from '../RecipeList/RecipeList'
 
 interface Props {
     recipe?: Recipe
-    sendToBackend: (payload: object) => Promise<Recipe>
-    setRecipes: (recipes: Recipe[]) => void
-    recipes: Recipe[]
+    onSubmit: (name: string, description: string, ingredients: object[]) => Promise<void>
 }
 
 
 const RecipeForm = (props: Props) => {
-    const { recipe, recipes, setRecipes, sendToBackend } = props
+    const { recipe, onSubmit } = props
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [ingredients, setIngredients] = useState([{'name': ''}])
-    const history = useHistory()
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
-        const currentRecipes = recipes
-        try {
-            const newRecipe = await sendToBackend({
-                name: name,
-                description: description,
-                ingredients: ingredients
-            })
-            setRecipes([...currentRecipes, newRecipe])
-            history.push('/')
-        } catch (err) {
-            console.error(err)
-        }
+        onSubmit(name, description, ingredients)
     }
 
     const handleNameChange = (event: React.FormEvent<HTMLInputElement>): void => {

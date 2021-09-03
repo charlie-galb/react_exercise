@@ -47,4 +47,15 @@ describe('Recipe', () => {
         ])
         expect(history.location.pathname).toEqual('/')
     })
+    it('Routes to "/:id/update" path when update button is pressed', async () => {
+        mockedAxios.get.mockResolvedValue({data: recipe1})
+        const { history, getByText } = renderWithRouter(
+            component, 
+            '/1'
+            )
+        await act(() => Promise.resolve())
+        fireEvent.click(getByText('Update'))
+        await act(() => Promise.resolve())
+        expect(history.location.pathname).toEqual('/1/update')
+    })
 })
