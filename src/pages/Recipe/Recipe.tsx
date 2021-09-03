@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useHistory, useRouteMatch } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { RouteComponentProps } from '@reach/router'
 
 import retrieveAndSetRecipe from '../../utils/retrieveAndSetRecipe'
@@ -39,7 +39,7 @@ const Recipe = (props: Props) => {
 
     useEffect(() => {
         retrieveAndSetRecipe(id, setRecipe)
-    }, [])
+    }, [id])
 
     return (
         <>

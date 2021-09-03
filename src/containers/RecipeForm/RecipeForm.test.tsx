@@ -1,20 +1,14 @@
-import { render, fireEvent, screen, act } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 
 import RecipeForm from './RecipeForm'
-import { recipe1, recipeArr } from '../../data/testData'
-import renderWithRouter from '../../utils/testUtils/renderWithRouter'
+import { recipe1 } from '../../data/testData'
 
 describe('RecipeForm', () => {
 
     const mockOnSubmit = jest.fn()
-    const mockSetRecipes = jest.fn()
-
 
     const fillOutFields = () => {
-        const component = renderWithRouter(
-            <RecipeForm onSubmit={mockOnSubmit} />,
-            '/add_recipe'
-        )
+        const component = render(<RecipeForm onSubmit={mockOnSubmit} />)
         const nameField = screen.getByPlaceholderText('Name')
         const descriptionField = screen.getByPlaceholderText('Description')
         const ingredientsField = screen.getByTestId('ingredient1')
@@ -29,7 +23,6 @@ describe('RecipeForm', () => {
             }})
         return component
     }
-
 
     it('Leaves the fields blank if no values are passed in as props', () => {
         render(<RecipeForm onSubmit={mockOnSubmit} />)
@@ -46,8 +39,8 @@ describe('RecipeForm', () => {
         expect(screen.getByPlaceholderText('Description')).toHaveValue(recipe1.description)
         expect(screen.getByTestId('ingredient1')).toHaveValue(recipe1.ingredients[0].name)
     })
-    it('Sends request to backend on submit and redirects to home', async () => {
-        const { history } = fillOutFields()
+    it('Fires callback on submit', async () => {
+        fillOutFields()
         fireEvent.click(screen.getByText('Submit'))
         expect(mockOnSubmit).toHaveBeenCalledTimes(1)
         expect(mockOnSubmit).toHaveBeenCalledWith(

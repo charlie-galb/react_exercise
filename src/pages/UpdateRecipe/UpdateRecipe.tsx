@@ -20,7 +20,7 @@ const UpdateRecipe = (props: Props) => {
 
     useEffect(() => {
         retrieveAndSetRecipe(id, setRecipe)
-    }, [])
+    }, [id])
 
     const patchAndUpdateRecipe = async (name: string, description: string, ingredients: object[]) => {
         try {

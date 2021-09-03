@@ -1,5 +1,3 @@
-
-
 import { fireEvent, act } from '@testing-library/react'
 import axios from 'axios'
 import { Route } from 'react-router-dom'
@@ -11,7 +9,7 @@ import renderWithRouter from '../../utils/testUtils/renderWithRouter'
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 const mockSetRecipes = jest.fn().mockResolvedValue(recipeArr)
-const component = <Route path='/:id'>
+const component = <Route path='/:id/update'>
                     <UpdateRecipe recipe={recipe2} recipes={recipeArr} setRecipes={mockSetRecipes} />
                 </Route>
 

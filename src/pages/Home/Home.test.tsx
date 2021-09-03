@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { render, fireEvent, act } from '@testing-library/react'
+import { fireEvent, act } from '@testing-library/react'
 
 import Home from './Home'
 import { recipeArr } from '../../data/testData'

@@ -1,5 +1,3 @@
-import styled, { css } from 'styled-components'
-
 import { Link, List } from '../../components'
 import Recipe from '../../types/Recipe'
 
