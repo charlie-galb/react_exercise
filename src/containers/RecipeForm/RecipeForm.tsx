@@ -1,22 +1,39 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import Form from '../../components/Form'
-import Input from '../../components/Input'
-import Button from '../../components/Button'
+import { Form, Button, Input} from '../../components'
+import Recipe from '../../types/Recipe'
+import RecipeList from '../RecipeList/RecipeList'
 
-const CreateRecipeForm = () => {
+interface Props {
+    recipe?: Recipe
+    sendToBackend: (payload: object) => Promise<Recipe>
+    setRecipes: (recipes: Recipe[]) => void
+    recipes: Recipe[]
+}
+
+
+const RecipeForm = (props: Props) => {
+    const { recipe, recipes, setRecipes, sendToBackend } = props
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [ingredients, setIngredients] = useState([{'name': ''}])
+    const history = useHistory()
 
-    const handleSubmit = (event: React.FormEvent): void => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
-        axios.post('/api/recipe/recipes/', {
-            name: name,
-            description: description,
-            ingredients: ingredients
-        })
+        const currentRecipes = recipes
+        try {
+            const newRecipe = await sendToBackend({
+                name: name,
+                description: description,
+                ingredients: ingredients
+            })
+            setRecipes([...currentRecipes, newRecipe])
+            history.push('/')
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     const handleNameChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -46,6 +63,14 @@ const CreateRecipeForm = () => {
         setIngredients([...currentIngredients])
     }
 
+    useEffect(() => {
+        if (recipe) {
+            setName(recipe.name)
+            setDescription(recipe.description)
+            setIngredients(recipe.ingredients)
+        }
+    }, [recipe])
+
     return (
         <Form>
             <Input type='text' 
@@ -73,4 +98,4 @@ const CreateRecipeForm = () => {
     )
 }
 
-export default CreateRecipeForm
+export default RecipeForm
