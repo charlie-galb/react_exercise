@@ -30,6 +30,7 @@ describe('Recipe', () => {
     })
     it('Deletes recipe and redirects to home when delete button is pressed', async () => {
         mockedAxios.get.mockResolvedValue({data: recipe1})
+        mockedAxios.delete.mockResolvedValue({status: 204})
         const { history, getByText } = renderWithRouter(
             component, 
             '/1'

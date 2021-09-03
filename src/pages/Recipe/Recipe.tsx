@@ -21,19 +21,30 @@ const Recipe = (props: Props) => {
 
     const handleDelete = async (event: React.FormEvent) => {
         event.preventDefault()
-        await deleteRecipe(id)
-        console.log(id)
-        const currentId = parseInt(id)
-        console.log(currentId)
-        let newRecipes = recipes
-        newRecipes = newRecipes.filter((recipe: RecipeType) => recipe.id !== currentId)
-        console.log(JSON.stringify(newRecipes))
-        setRecipes(newRecipes)
-        history.push('/')
+        try {
+            await deleteRecipe(id)
+            console.log('In Delete!')
+            const currentId = parseInt(id)
+            let newRecipes = recipes
+            newRecipes = newRecipes.filter((recipe: RecipeType) => recipe.id !== currentId)
+            setRecipes(newRecipes)
+            history.push('/')
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const retrieveAndSetRecipe = async () => {
+        try {
+            const retrievedRecipe = await retrieveRecipe(id)
+            setRecipe(retrievedRecipe)
+        } catch(err) {
+            console.error(err)
+        }
     }
 
     useEffect(() => {
-        retrieveRecipe(id, setRecipe)
+        retrieveAndSetRecipe()
     }, [id])
 
     return (

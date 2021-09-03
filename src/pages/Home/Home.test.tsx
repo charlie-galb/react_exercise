@@ -19,6 +19,6 @@ describe('Home', () => {
         await act(() => Promise.resolve())
         const btn = getByText('Create a new recipe')
         fireEvent.click(btn)
-        expect(history.location.pathname).toEqual('/create_recipe')
+        expect(history.location.pathname).toEqual('/add_recipe')
     })
 })

@@ -16,7 +16,7 @@ const Home = (props: Props) => {
     const { recipes } = props
 
     const handleClick = () => {
-        history.push('/create_recipe')
+        history.push('/add_recipe')
     }
 
     return (
