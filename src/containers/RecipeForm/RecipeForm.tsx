@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from "styled-components"
 
 import { 
-    Form, Button, Input, LabelText, FlexContainer, Section, FlashNotice
+    Form, Button, Input, LabelText, FlexContainer, Section, FlashNotice, TextArea
 } from '../../components'
 import Recipe from '../../types/Recipe'
 
@@ -41,7 +41,7 @@ const RecipeForm = (props: Props) => {
         setName(event.currentTarget.value)
     }
 
-    const handleDescriptionChange = (event: React.FormEvent<HTMLInputElement>): void => {
+    const handleDescriptionChange = (event: React.FormEvent<HTMLTextAreaElement>): void => {
         setDescription(event.currentTarget.value)
     }
 
@@ -82,7 +82,7 @@ const RecipeForm = (props: Props) => {
                 value={name} 
                 onChange={handleNameChange} />
                 <LabelText>Description</LabelText>
-                <Input type='text' 
+                <TextArea 
                 data-testid='recipe-description-input'
                 placeholder='Some kind of inflatable cake' 
                 value={description} 

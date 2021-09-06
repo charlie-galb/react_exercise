@@ -12,6 +12,7 @@ import Para from './Para'
 import Section from './Section'
 import StyledDiv from './StyledDiv'
 import SubHeaderText from './SubHeaderText'
+import TextArea from './TextArea'
 
 export { 
     Banner,
@@ -27,5 +28,6 @@ export {
     Para,
     Section,
     StyledDiv,
-    SubHeaderText
+    SubHeaderText,
+    TextArea
 }
