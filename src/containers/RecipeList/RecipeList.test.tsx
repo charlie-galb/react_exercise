@@ -22,7 +22,7 @@ describe('Home', () => {
         expect(getByText(recipeArr[1].name)).not.toBeNull()
         expect(getByText(recipeArr[1].name)).toHaveAttribute('href', `/${recipeArr[1].id}`)
     })
-    it('Truncates the description to 30 characters', async () => {
+    it('Truncates long descriptions to 30 characters', async () => {
         const longRecipe: Recipe = {
             id: 4,
             name: 'A Long Recipe',
@@ -38,5 +38,13 @@ describe('Home', () => {
 
         expect(getByTestId(`recipe${recipeArr[2].id}-description`))
             .toHaveTextContent(truncatedDescription)
+    })
+    it('Does not apply ellipsis to short descriptions', async () => {
+        const { getByTestId } = renderWithRouter(
+            <RecipeList recipes={recipeArr}/>,
+            '/'
+            )
+        expect(getByTestId(`recipe${recipeArr[1].id}-description`))
+            .not.toHaveTextContent('...')
     })
 })
