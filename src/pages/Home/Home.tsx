@@ -22,7 +22,7 @@ const Home = (props: Props) => {
         <Section>
             <HeaderText>My Recipes</HeaderText>
                 <RecipeList recipes={recipes} />
-                <Button onClick={handleClick}>Create a new recipe</Button>
+                <Button onClick={handleClick} data-testid='create-recipe-button'>Create a new recipe</Button>
         </Section>
     )
 }

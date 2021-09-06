@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import GlobalStyle from './GlobalStyle';
-import Banner from './components/Banner'
+import { Banner } from './components'
 import Home from './pages/Home/Home'
 import AddRecipe from './pages/AddRecipe/AddRecipe'
 import Recipe from './pages/Recipe/Recipe'
@@ -29,7 +29,7 @@ const App = () => {
   return (
     <Router>
       <GlobalStyle />
-      <Banner>Recipe Manager</Banner>
+      <Banner><a style={{textDecoration: 'none', color: 'black'}} href='/'>Recipe Manager</a></Banner>
       <Switch>
         <Route exact path='/' render={
           () => <Home recipes={recipes} />} />
