@@ -1,24 +1,20 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 interface Props {
     children: React.ReactNode
-    column?: string
+    flexDirection?: string
+    width?: string
 }
 
 const FlexContainer = styled.div<Props>`
-    border: solid blue 2px;
     display: flex;
+    flex-direction: ${props => props.flexDirection || 'row'};
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;
     margin-bottom: 5px;
     padding: 10px;
-    width: 80%;
-
-    ${props =>
-    props.column &&
-    css`
-    flex-direction: ${props.column};`}
+    width: ${props => props.width || '80%' }
 `
 
 export default FlexContainer

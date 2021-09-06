@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import styled from "styled-components"
 
-import { Form, Button, Input} from '../../components'
+import { Form, Button, Input, LabelText, FlexContainer, Section } from '../../components'
 import Recipe from '../../types/Recipe'
 
 interface Props {
@@ -56,30 +57,44 @@ const RecipeForm = (props: Props) => {
     }, [recipe])
 
     return (
-        <Form>
-            <Input type='text' 
-            placeholder='Name' 
-            value={name} 
-            onChange={handleNameChange} />
-            <Input type='text' 
-            placeholder='Description' 
-            value={description} 
-            onChange={handleDescriptionChange} />
-            {ingredients.map((ingredient, index) => (
-                <span key={index}>
-                    <Input 
-                    type='text' 
-                    data-testid={`ingredient${index+1}`}
-                    placeholder='Name of ingredient' 
-                    value={ingredient.name} 
-                    onChange={handleIngredientsChange(index)} />
-                </span>
-            ))}
-            <Button onClick={handleAddIngredient}>Add ingredient</Button>
-            <Button onClick={handleRemoveIngredient}>Remove ingredient</Button>
-            <Button submit={true} primary={true} onClick={handleSubmit}>Submit</Button>
-        </Form>
+        <Section>
+            <Form>
+                <LabelText>Name</LabelText>
+                <Input type='text'
+                data-testid='recipe-name-input' 
+                placeholder='Souffle' 
+                value={name} 
+                onChange={handleNameChange} />
+                <LabelText>Description</LabelText>
+                <Input type='text' 
+                data-testid='recipe-description-input'
+                placeholder='Some kind of inflatable cake' 
+                value={description} 
+                onChange={handleDescriptionChange} />
+                <LabelText>Ingredients</LabelText>
+                {ingredients.map((ingredient, index) => (
+                    <StyledSpan key={index}>
+                        <Input 
+                        type='text' 
+                        data-testid={`ingredient${index+1}-name-input`}
+                        placeholder='Sugar' 
+                        value={ingredient.name} 
+                        onChange={handleIngredientsChange(index)} />
+                    </StyledSpan>
+                ))}
+                <FlexContainer>
+                    <Button onClick={handleAddIngredient} color='green'>Add ingredient</Button>
+                    <Button onClick={handleRemoveIngredient}>Remove ingredient</Button>
+                </FlexContainer>
+                <Button submit={true} primary={true} color='green' onClick={handleSubmit}>Submit</Button>
+            </Form>
+        </Section>
     )
 }
+
+const StyledSpan = styled.span`
+    text-align: center;
+    width: 100%;
+`
 
 export default RecipeForm

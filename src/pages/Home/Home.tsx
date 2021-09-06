@@ -19,15 +19,11 @@ const Home = (props: Props) => {
     }
 
     return (
-        <>  
+        <Section>
             <HeaderText>My Recipes</HeaderText>
-            <Section>
                 <RecipeList recipes={recipes} />
-            </Section>
-            <Section>
                 <Button onClick={handleClick}>Create a new recipe</Button>
-            </Section>
-        </>
+        </Section>
     )
 }
 

@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom'
 import { RouteComponentProps } from '@reach/router'
 
+import { Section, HeaderText } from '../../components'
 import RecipeForm from "../../containers/RecipeForm/RecipeForm"
 import Recipe from '../../types/Recipe'
 import createRecipe from '../../api/createRecipe'
@@ -30,9 +31,10 @@ const AddRecipe = (props: Props) => {
     }
 
     return (
-        <>
+        <Section>
+            <HeaderText>Add a new recipe</HeaderText>
             <RecipeForm onSubmit={createAndAddToRecipes}/>
-        </>
+        </Section>
     )
 }
 

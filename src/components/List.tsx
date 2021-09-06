@@ -1,7 +1,12 @@
-import styled from 'styled-components'
+import styled, { css} from 'styled-components'
 
-const List = styled.ul`
-    list-style-type: none;
+interface Props {
+    listStyle?:string
+}
+
+const List = styled.ul<Props>`
+    list-style-type: ${props => props.listStyle || 'none'};
+    padding: 5px
 `
 
 export default List

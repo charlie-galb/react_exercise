@@ -1,4 +1,4 @@
-import { Link, List, SubHeaderText, FlexContainer } from '../../components'
+import { Link, List, Para, FlexContainer, StyledDiv } from '../../components'
 import Recipe from '../../types/Recipe'
 
 interface Props {
@@ -9,12 +9,27 @@ const RecipeList = (props: Props) => {
 
     const { recipes } = props
 
+    const truncateDescription = (description: string) => {
+        return `${description.substring(0, 30)}...`
+    }
+
     return (
         <List>
             {recipes?.map((recipe, idx) => {
                 return (
                 <li key={idx}>
-                    <Link href={`/${recipe.id}`}>{recipe.name}</Link>
+                    <FlexContainer>
+                        <StyledDiv>
+                            <Link data-testid={`recipe${recipe.id}-link`}href={`/${recipe.id}`}>
+                                {recipe.name}
+                                </Link>
+                        </StyledDiv>
+                        <StyledDiv>
+                            <Para data-testid={`recipe${recipe.id}-description`}>
+                                {truncateDescription(recipe.description)}
+                                </Para>
+                        </StyledDiv>
+                    </FlexContainer>
                 </li>
                 )
             })}

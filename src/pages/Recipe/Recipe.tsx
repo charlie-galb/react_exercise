@@ -6,7 +6,9 @@ import retrieveAndSetRecipe from '../../utils/retrieveAndSetRecipe'
 import deleteRecipe from '../../api/deleteRecipe'
 import RecipeType from '../../types/Recipe'
 import Ingredient from '../../types/Ingredient'
-import { HeaderText, Button, Para, SubHeaderText, List, Section } from '../../components'
+import { 
+    HeaderText, Button, Para, SubHeaderText, List, Section, FlexContainer, StyledDiv 
+} from '../../components'
 
 interface Props extends RouteComponentProps {
     recipes: RecipeType[]
@@ -42,26 +44,31 @@ const Recipe = (props: Props) => {
     }, [id])
 
     return (
-        <>
-            <Section>
-                <HeaderText>{recipe && recipe.name}</HeaderText>
-                <Para>{recipe && recipe.description}</Para>
-                <SubHeaderText>Ingredients</SubHeaderText>
-                <List>
-                    {recipe && recipe.ingredients.map((
-                        ingredient: Ingredient, 
-                        idx: number) => {
-                            return (
-                                <li key={idx}>{ingredient.name}</li>
-                            )
-                    })}
-                </List>
-            </Section>
-            <Section>
-                <Button onClick={handleDelete}>Delete</Button>
-                <Button onClick={handleUpdate}>Update</Button>
-            </Section>
-        </>
+        <Section>
+            <HeaderText>{recipe && recipe.name}</HeaderText>
+            <FlexContainer>
+                <StyledDiv width='75%'>
+                    <SubHeaderText>Description</SubHeaderText>
+                    <Para>{recipe && recipe.description}</Para>
+                </StyledDiv>
+                <StyledDiv width='25%'>
+                    <SubHeaderText>Ingredients</SubHeaderText>
+                    <List listStyle='circle'>
+                        {recipe && recipe.ingredients.map((
+                            ingredient: Ingredient, 
+                            idx: number) => {
+                                return (
+                                    <li key={idx}>{ingredient.name}</li>
+                                )
+                        })}
+                    </List>
+                </StyledDiv>
+            </FlexContainer>
+            <FlexContainer width='40%'>
+                <Button onClick={handleDelete} primary={true}>Delete</Button>
+                <Button onClick={handleUpdate}primary={true} color='green'>Update</Button>
+            </FlexContainer>
+        </Section>
     )
 }
 

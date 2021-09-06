@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const SubHeaderText = styled.h3`
-    text-align: center;
+    text-align: left;
 `
 
 export default SubHeaderText
