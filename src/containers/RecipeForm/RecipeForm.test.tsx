@@ -30,6 +30,12 @@ describe('RecipeForm', () => {
         expect(screen.getByTestId('recipe-description-input')).toHaveValue('')
         expect(screen.getByTestId('ingredient1-name-input')).toHaveValue('')
     })
+    it('Will not submit if "name" and "description" fields are blank', () => {
+        render(<RecipeForm onSubmit={mockOnSubmit} />)
+        fireEvent.click(screen.getByText('Submit'))
+        expect(mockOnSubmit).toHaveBeenCalledTimes(0)
+        expect(screen.getByText('Please fill in name and description fields before submitting')).not.toBeNull()
+    })
     it('Populates the fields with values passed in as props', () => {
         render(<RecipeForm
             onSubmit={mockOnSubmit}

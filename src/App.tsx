@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
 import GlobalStyle from './GlobalStyle';
 import { Banner } from './components'
@@ -29,7 +29,7 @@ const App = () => {
   return (
     <Router>
       <GlobalStyle />
-      <Banner><a style={{textDecoration: 'none', color: 'black'}} href='/'>Recipe Manager</a></Banner>
+      <Banner><Link style={{textDecoration: 'none', color: 'black'}} to='/'>Recipe Manager</Link></Banner>
       <Switch>
         <Route exact path='/' render={
           () => <Home recipes={recipes} />} />

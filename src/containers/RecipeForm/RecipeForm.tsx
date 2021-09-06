@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from "styled-components"
 
-import { Form, Button, Input, LabelText, FlexContainer, Section } from '../../components'
+import { 
+    Form, Button, Input, LabelText, FlexContainer, Section, FlashNotice
+} from '../../components'
 import Recipe from '../../types/Recipe'
 
 interface Props {
@@ -12,13 +14,27 @@ interface Props {
 
 const RecipeForm = (props: Props) => {
     const { recipe, onSubmit } = props
+    const [renderNotice, setRenderNotice] = useState(false)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [ingredients, setIngredients] = useState([{'name': ''}])
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
-        onSubmit(name, description, ingredients)
+        if (name && description) {
+            onSubmit(name, description, ingredients)
+        } else {
+            setRenderNotice(true)
+            setTimeout(() => { setRenderNotice(false) }, 5000)
+        }
+    }
+
+    const renderFlashNotice = () => {
+        if (renderNotice === true) {
+            return (
+                <FlashNotice>Please fill in name and description fields before submitting</FlashNotice>
+            )
+        }
     }
 
     const handleNameChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -70,7 +86,8 @@ const RecipeForm = (props: Props) => {
                 data-testid='recipe-description-input'
                 placeholder='Some kind of inflatable cake' 
                 value={description} 
-                onChange={handleDescriptionChange} />
+                onChange={handleDescriptionChange} 
+                required />
                 <LabelText>Ingredients</LabelText>
                 {ingredients.map((ingredient, index) => (
                     <StyledSpan key={index}>
@@ -79,7 +96,8 @@ const RecipeForm = (props: Props) => {
                         data-testid={`ingredient${index+1}-name-input`}
                         placeholder='Sugar' 
                         value={ingredient.name} 
-                        onChange={handleIngredientsChange(index)} />
+                        onChange={handleIngredientsChange(index)} 
+                        required />
                     </StyledSpan>
                 ))}
                 <FlexContainer>
@@ -87,6 +105,7 @@ const RecipeForm = (props: Props) => {
                     <Button onClick={handleRemoveIngredient}>Remove ingredient</Button>
                 </FlexContainer>
                 <Button submit={true} primary={true} color='green' onClick={handleSubmit}>Submit</Button>
+                {renderFlashNotice()}
             </Form>
         </Section>
     )

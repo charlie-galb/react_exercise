@@ -20,7 +20,7 @@ const RecipeList = (props: Props) => {
                 <li key={idx}>
                     <FlexContainer>
                         <StyledDiv>
-                            <Link data-testid={`recipe${recipe.id}-link`}href={`/${recipe.id}`}>
+                            <Link data-testid={`recipe${recipe.id}-link`} to={`/${recipe.id}`}>
                                 {recipe.name}
                                 </Link>
                         </StyledDiv>

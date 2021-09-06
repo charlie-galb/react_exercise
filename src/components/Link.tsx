@@ -1,7 +1,8 @@
 import styled from "styled-components"
+import { Link } from 'react-router-dom';
 
-const Link = styled.a`
+const StyledLink = styled(Link)`
     color: green;
 `
 
-export default Link
+export default StyledLink

@@ -1,5 +1,6 @@
 import Banner from './Banner'
 import Button from './Button'
+import FlashNotice from './FlashNotice'
 import FlexContainer from './FlexContainer'
 import Form from './Form'
 import HeaderText from './HeaderText'
@@ -15,6 +16,7 @@ import SubHeaderText from './SubHeaderText'
 export { 
     Banner,
     Button,
+    FlashNotice,
     FlexContainer,
     Form,
     HeaderText,

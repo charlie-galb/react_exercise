@@ -17,10 +17,19 @@ describe('UpdateRecipe', () => {
     it('Sends Patch request to backend when submit button is pressed', async () => {
         mockedAxios.get.mockResolvedValue({data: recipe2})
         mockedAxios.patch.mockResolvedValue({data: recipe2})
-        const { getByText, history } = renderWithRouter(
+        const { getByText, getByTestId, history } = renderWithRouter(
         component,
         `/${recipe2.id}/update`
         )
+        fireEvent.change(getByTestId('recipe-name-input'), {target: {value: 'Bangers and mash'}})
+        fireEvent.change(
+            getByTestId('recipe-description-input'), {target: {
+                value: 'Cook sausages and mashed potato and mix together.'
+            }})
+        fireEvent.change(
+            getByTestId('ingredient1-name-input'), {target: {
+                value: 'Bangers'
+            }})
         fireEvent.click(getByText('Submit'))
         await act(() => Promise.resolve())
         expect(mockedAxios.patch).toHaveBeenCalledTimes(1)
