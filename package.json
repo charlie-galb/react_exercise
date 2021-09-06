@@ -28,8 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "cypress:open": "cypress open"
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +49,6 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.13.2",
-    "cypress": "^8.3.1"
+    "babel-plugin-styled-components": "^1.13.2"
   }
 }
