@@ -19,7 +19,7 @@ const RecipeForm = (props: Props) => {
     const [description, setDescription] = useState('')
     const [ingredients, setIngredients] = useState([{'name': ''}])
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
         if (name && description) {
             onSubmit(name, description, ingredients)
@@ -32,7 +32,7 @@ const RecipeForm = (props: Props) => {
     const renderFlashNotice = () => {
         if (renderNotice === true) {
             return (
-                <FlashNotice>Please fill in name and description fields before submitting</FlashNotice>
+                <FlashNotice data-testid='empty-fields-notice'>Please fill in name and description fields before submitting</FlashNotice>
             )
         }
     }
