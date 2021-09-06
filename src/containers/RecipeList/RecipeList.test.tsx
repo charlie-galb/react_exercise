@@ -17,7 +17,6 @@ describe('Home', () => {
         const { getByText } = renderWithRouter(
             <RecipeList recipes={recipeArr}/>, '/'
             )
-        console.log(JSON.stringify(recipeArr[1]))
         expect(getByText(recipeArr[0].name)).not.toBeNull()
         expect(getByText(recipeArr[1].name)).not.toBeNull()
         expect(getByText(recipeArr[1].name)).toHaveAttribute('href', `/${recipeArr[1].id}`)
