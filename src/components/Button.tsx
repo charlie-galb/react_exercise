@@ -16,11 +16,23 @@ const Button = styled.button<Props>`
   display: block;
   padding: 0.25em 1em;
 
+  &:hover {
+    background-color: ${props => props.color || 'red'};
+    color: white;
+    cursor: pointer;
+  }
+
   ${props =>
     props.primary &&
     css`
       background: ${props.color || 'red'};
       color: white;
+
+      &:hover {
+        background: transparent;
+        color: ${props.color || 'red'};
+        cursor: pointer;
+      }
     `};
 `
 
