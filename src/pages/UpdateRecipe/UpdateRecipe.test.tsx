@@ -9,10 +9,19 @@ import renderWithRouter from '../../utils/testUtils/renderWithRouter'
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 const component = <Route path='/:id/update'>
-                    <UpdateRecipe recipe={recipe2} />
+                    <UpdateRecipe />
                 </Route>
 
 describe('UpdateRecipe', () => {
+    it('Displays a flash notice if it fails to retrieve the recipe', async () => {
+        mockedAxios.get.mockImplementation(() => { throw Error })
+        const { getByText } = renderWithRouter(
+        component, 
+        `/${recipe2.id}/update`
+        )
+        await waitFor(() => expect(mockedAxios.get).toBeCalledTimes(1))
+        expect(getByText('Failed to retrieve recipe. Sorry about that.')).not.toBeNull()
+    })
     it('Sends Patch request to backend when submit button is pressed', async () => {
         mockedAxios.get.mockResolvedValue({data: recipe2})
         mockedAxios.patch.mockResolvedValue({data: recipe2})
@@ -41,5 +50,17 @@ describe('UpdateRecipe', () => {
             })
         })
         expect(history.location.pathname).toEqual(`/${recipe2.id}`)
+    })
+    it('Displays a flash notice if it fails to update the recipe', async () => {
+        mockedAxios.get.mockResolvedValue({data: recipe2})
+        mockedAxios.patch.mockImplementation(() => { throw Error })
+        const { getByText } = renderWithRouter(
+        component, 
+        `/${recipe2.id}/update`
+        )
+        await waitFor(() => expect(mockedAxios.get).toBeCalledTimes(1))
+        fireEvent.click(getByText('Submit'))
+        await waitFor(() => expect(mockedAxios.patch).toBeCalledTimes(1))
+        expect(getByText('Failed to update recipe. Sorry about that.')).not.toBeNull()
     })
 })

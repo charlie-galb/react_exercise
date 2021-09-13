@@ -98,7 +98,7 @@ const RecipeForm = (props: Props) => {
                 </FlexContainer>
                 <Button submit={true} primary={true} color='green' onClick={handleSubmit}>Submit</Button>
                 {renderNotice &&
-                <FlashNotice data-testid='empty-fields-notice'>Please fill in name and description fields before submitting</FlashNotice>
+                    <FlashNotice data-testid='empty-fields-notice'>Please fill in name and description fields before submitting</FlashNotice>
                 }
             </Form>
         </Section>

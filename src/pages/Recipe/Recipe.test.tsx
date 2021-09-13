@@ -25,6 +25,15 @@ describe('Recipe', () => {
         expect(screen.getByText('Sugar')).not.toBeNull()
         expect(screen.getByText('Flour')).not.toBeNull()
     })
+    it('Displays a flash notice if it fails to retrieve the recipe', async () => {
+        mockedAxios.get.mockImplementation(() => { throw Error })
+        renderWithRouter(
+        component, 
+        '/1'
+        )
+        await waitFor(() => expect(mockedAxios.get).toBeCalledTimes(1))
+        expect(screen.getByText('Failed to retrieve recipe. Sorry about that.')).not.toBeNull()
+    })
     it('Deletes recipe and redirects to home when delete button is pressed', async () => {
         mockedAxios.get.mockResolvedValue({data: recipe1})
         mockedAxios.delete.mockResolvedValue({status: 204})
@@ -38,6 +47,17 @@ describe('Recipe', () => {
         fireEvent.click(getByText('Delete'))
         await waitFor(() => expect(mockedAxios.delete).toBeCalledTimes(1))
         expect(history.location.pathname).toEqual('/')
+    })
+    it('Displays a flash notice if it fails to delete the recipe', async () => {
+        mockedAxios.delete.mockImplementation(() => { throw Error })
+        const { getByText } = renderWithRouter(
+        component, 
+        '/1'
+        )
+        await waitFor(() => expect(mockedAxios.get).toBeCalledTimes(1))
+        fireEvent.click(getByText('Delete'))
+        await waitFor(() => expect(mockedAxios.delete).toBeCalledTimes(1))
+        expect(getByText('Failed to delete recipe. Sorry about that.')).not.toBeNull()
     })
     it('Routes to "/:id/update" path when update button is pressed', async () => {
         mockedAxios.get.mockResolvedValue({data: recipe1})

@@ -25,4 +25,14 @@ describe('Home', () => {
         expect(mockedAxios.get).toHaveBeenCalled()
         expect(history.location.pathname).toEqual('/add_recipe')
     })
+    it('displays a flash notice when api call fails', async () => {
+        mockedAxios.get.mockImplementation(() => { throw Error })
+        const { getByText, history } = renderWithRouter(
+        component,
+        '/'
+        )
+        await act(() => Promise.resolve())
+        expect(mockedAxios.get).toHaveBeenCalled()
+        expect(getByText('Failed to retrieve recipes. Sorry about that.')).not.toBeNull()
+    })
 })
