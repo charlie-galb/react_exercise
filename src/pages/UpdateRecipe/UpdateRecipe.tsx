@@ -8,12 +8,9 @@ import RecipeType from '../../types/Recipe'
 
 interface Props {
     recipe?: RecipeType
-    setRecipes: (recipes: RecipeType[]) => void
-    recipes: RecipeType[]
 }
 
 const UpdateRecipe = (props: Props) => {
-    const { recipes, setRecipes } = props
     const [recipe, setRecipe] = useState<RecipeType>()
     const { id } = useParams<{ id: string }>()
     const history = useHistory()
@@ -24,22 +21,12 @@ const UpdateRecipe = (props: Props) => {
 
     const patchAndUpdateRecipe = async (name: string, description: string, ingredients: object[]) => {
         try {
-            const currentRecipes = recipes
-            const currentId = parseInt(id)
             const payload = {
                 name: name,
                 description: description,
                 ingredients: ingredients
             }
             const newRecipe = await patchRecipe(id, payload)
-            const newRecipes = currentRecipes.map((rec) => {
-                if (rec.id === currentId) {
-                    return newRecipe
-                } else {
-                    return rec
-                }
-            })
-            setRecipes(newRecipes)
             history.push(`/${id}`)
         } catch (err) {
             console.error(err)

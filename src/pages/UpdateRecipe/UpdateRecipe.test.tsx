@@ -8,9 +8,8 @@ import renderWithRouter from '../../utils/testUtils/renderWithRouter'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
-const mockSetRecipes = jest.fn().mockResolvedValue(recipeArr)
 const component = <Route path='/:id/update'>
-                    <UpdateRecipe recipe={recipe2} recipes={recipeArr} setRecipes={mockSetRecipes} />
+                    <UpdateRecipe recipe={recipe2} />
                 </Route>
 
 describe('UpdateRecipe', () => {
@@ -33,7 +32,6 @@ describe('UpdateRecipe', () => {
         fireEvent.click(getByText('Submit'))
         await act(() => Promise.resolve())
         expect(mockedAxios.patch).toHaveBeenCalledTimes(1)
-        expect(mockSetRecipes).toHaveBeenCalledTimes(1)
         expect(history.location.pathname).toEqual(`/${recipe2.id}`)
     })
 })

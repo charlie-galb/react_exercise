@@ -38,7 +38,7 @@ const App = () => {
         <Route exact path='/:id' render={
           () => <Recipe recipes={recipes} setRecipes={setRecipes} />} />
         <Route exact path='/:id/update' render={
-          () => <UpdateRecipe setRecipes={setRecipes} recipes={recipes} />} />
+          () => <UpdateRecipe />} />
       </Switch>
     </Router>
   );
