@@ -29,14 +29,6 @@ const RecipeForm = (props: Props) => {
         }
     }
 
-    const renderFlashNotice = () => {
-        if (renderNotice === true) {
-            return (
-                <FlashNotice data-testid='empty-fields-notice'>Please fill in name and description fields before submitting</FlashNotice>
-            )
-        }
-    }
-
     const handleNameChange = (event: React.FormEvent<HTMLInputElement>): void => {
         setName(event.currentTarget.value)
     }
@@ -105,7 +97,9 @@ const RecipeForm = (props: Props) => {
                     <Button onClick={handleRemoveIngredient}>Remove ingredient</Button>
                 </FlexContainer>
                 <Button submit={true} primary={true} color='green' onClick={handleSubmit}>Submit</Button>
-                {renderFlashNotice()}
+                {renderNotice &&
+                <FlashNotice data-testid='empty-fields-notice'>Please fill in name and description fields before submitting</FlashNotice>
+                }
             </Form>
         </Section>
     )
