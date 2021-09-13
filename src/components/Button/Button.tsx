@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 interface Props {
     children: React.ReactNode
@@ -24,7 +24,7 @@ const Button = styled.button<Props>`
 
   ${props =>
     props.primary &&
-    css`
+    `
       background: ${props.color || 'red'};
       color: white;
 
