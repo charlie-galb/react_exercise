@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { Link, List, Para, FlexContainer, StyledDiv } from '../../components'
 import Recipe from '../../types/Recipe'
 
@@ -20,7 +22,7 @@ const RecipeList = (props: Props) => {
         <List>
             {recipes?.map((recipe, idx) => {
                 return (
-                <li key={idx}>
+                <li key={uuidv4()}>
                     <FlexContainer>
                         <StyledDiv>
                             <Link data-testid={`recipe${recipe.id}-link`} to={`/${recipe.id}`}>

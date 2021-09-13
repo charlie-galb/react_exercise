@@ -9,7 +9,7 @@ const AddRecipe = () => {
     const history = useHistory()
     const [renderNotice, setRenderNotice] = useState(false)
 
-    const createAndAddToRecipes = async (name: string, description: string, ingredients: object[]) => {
+    const createAndAddToRecipes = async (name: string, description: string, ingredients: object[] | void[]) => {
         try {
             await createRecipe({
                 name: name,

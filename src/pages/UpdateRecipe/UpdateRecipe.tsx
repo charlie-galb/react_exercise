@@ -18,7 +18,7 @@ const UpdateRecipe = () => {
         retrieveAndSetRecipe(id, setRecipe, setRenderRetrieveFailedNotice)
     }, [id])
 
-    const patchAndUpdateRecipe = async (name: string, description: string, ingredients: object[]) => {
+    const patchAndUpdateRecipe = async (name: string, description: string, ingredients: object[] | void[]) => {
         try {
             const payload = {
                 name: name,

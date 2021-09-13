@@ -64,7 +64,7 @@ const Recipe = () => {
             </FlexContainer>
             <FlexContainer width='40%'>
                 <Button onClick={handleDelete} primary={true}>Delete</Button>
-                <Button onClick={handleUpdate}primary={true} color='green'>Update</Button>
+                <Button onClick={handleUpdate} primary={true} color='green'>Update</Button>
             </FlexContainer>
             {renderDeleteFailedNotice &&
               <FlashNotice data-testid='retrieve-recipes-failed-notice'>

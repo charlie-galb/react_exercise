@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from "styled-components"
+import { v4 as uuidv4 } from 'uuid';
 
 import { 
     Form, Button, Input, LabelText, FlexContainer, Section, FlashNotice, TextArea
@@ -8,7 +9,7 @@ import Recipe from '../../types/Recipe'
 
 interface Props {
     recipe?: Recipe
-    onSubmit: (name: string, description: string, ingredients: object[]) => Promise<void>
+    onSubmit: (name: string, description: string, ingredients: object[] | void[]) => Promise<void>
 }
 
 
@@ -17,12 +18,16 @@ const RecipeForm = (props: Props) => {
     const [renderNotice, setRenderNotice] = useState(false)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [ingredients, setIngredients] = useState([{'name': ''}])
+    const [ingredients, setIngredients] = useState<Array<{id: string, name: string}>>([{id: uuidv4(), name: ''}])
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
         if (name && description) {
-            onSubmit(name, description, ingredients)
+            const processedIngredients = ingredients ? ingredients.map(ingredient => {
+                return {name: ingredient.name}
+            })
+            : []
+            onSubmit(name, description, processedIngredients)
         } else {
             setRenderNotice(true)
             setTimeout(() => { setRenderNotice(false) }, 5000)
@@ -46,7 +51,7 @@ const RecipeForm = (props: Props) => {
     const handleAddIngredient = (event: React.FormEvent) => {
         event.preventDefault()
         let currentIngredients = [...ingredients]
-        setIngredients([...currentIngredients, {'name': ''}])
+        setIngredients([...currentIngredients, {id: uuidv4(), name: ''}])
     }
 
     const handleRemoveIngredient = (event: React.FormEvent) => {
@@ -60,7 +65,13 @@ const RecipeForm = (props: Props) => {
         if (recipe) {
             setName(recipe.name)
             setDescription(recipe.description)
-            setIngredients(recipe.ingredients)
+            const unidentifiedIngredients = recipe.ingredients.map((ingredient) => {
+                return {
+                    id: uuidv4(),
+                    name: ingredient.name || ''
+                }
+            })
+            setIngredients(unidentifiedIngredients)
         }
     }, [recipe])
 
