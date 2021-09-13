@@ -1,14 +1,16 @@
-import { act, render, fireEvent, screen } from '@testing-library/react'
+import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
 
 import RecipeForm from './RecipeForm'
 import { recipe1 } from '../../data/testData'
+import { ReactChild } from 'react'
 
 describe('RecipeForm', () => {
 
     const mockOnSubmit = jest.fn()
+    const setupComponent = (): RenderResult => render(<RecipeForm onSubmit={mockOnSubmit} />)
+    const setupPreFilledComponent = (): RenderResult => render(<RecipeForm recipe={recipe1} onSubmit={mockOnSubmit} />)
 
     const fillOutFields = () => {
-        const component = render(<RecipeForm onSubmit={mockOnSubmit} />)
         const nameField = screen.getByTestId('recipe-name-input')
         const descriptionField = screen.getByTestId('recipe-description-input')
         const ingredientsField = screen.getByTestId('ingredient1-name-input')
@@ -21,32 +23,29 @@ describe('RecipeForm', () => {
             ingredientsField, {target: {
                 value: 'Bangers'
             }})
-        return component
     }
 
     it('Leaves the fields blank if no values are passed in as props', () => {
-        render(<RecipeForm onSubmit={mockOnSubmit} />)
+        setupComponent()
         expect(screen.getByTestId('recipe-name-input')).toHaveValue('')
         expect(screen.getByTestId('recipe-description-input')).toHaveValue('')
         expect(screen.getByTestId('ingredient1-name-input')).toHaveValue('')
     })
     it('Will not submit and displays flash notice if "name" and "description" fields are blank', () => {
-        render(<RecipeForm onSubmit={mockOnSubmit} />)
+        setupComponent()
         expect(screen.getByTestId('recipe-name-input')).toHaveValue('')
         fireEvent.click(screen.getByText('Submit'))
         expect(mockOnSubmit).toHaveBeenCalledTimes(0)
         expect(screen.getByTestId('empty-fields-notice')).not.toBeNull()
     })
     it('Populates the fields with values passed in as props', async () => {
-        render(<RecipeForm
-            onSubmit={mockOnSubmit}
-            recipe={recipe1}
-            />)
+        setupPreFilledComponent()
         expect(screen.getByTestId('recipe-name-input')).toHaveValue(recipe1.name)
         expect(screen.getByTestId('recipe-description-input')).toHaveValue(recipe1.description)
         expect(screen.getByTestId('ingredient1-name-input')).toHaveValue(recipe1.ingredients[0].name)
     })
     it('Fires callback on submit', async () => {
+        setupComponent()
         fillOutFields()
         fireEvent.click(screen.getByText('Submit'))
         expect(mockOnSubmit).toHaveBeenCalledTimes(1)
@@ -57,6 +56,7 @@ describe('RecipeForm', () => {
         )
     })
     it('Allows the user to add multiple ingredients', () => {
+        setupComponent()
         fillOutFields()
         fireEvent.click(screen.getByText('Add ingredient'))
         const ingredientsField2 = screen.getByTestId('ingredient2-name-input')
@@ -76,6 +76,7 @@ describe('RecipeForm', () => {
         )
     })
     it('Allows the user to remove ingredients', () => {
+        setupComponent()
         fillOutFields()
         fireEvent.click(screen.getByText('Add ingredient'))
         const ingredientsField2 = screen.getByTestId('ingredient2-name-input')
