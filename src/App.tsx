@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import GlobalStyle from './GlobalStyle';
@@ -7,24 +6,8 @@ import Home from './pages/Home/Home'
 import AddRecipe from './pages/AddRecipe/AddRecipe'
 import Recipe from './pages/Recipe/Recipe'
 import UpdateRecipe from './pages/UpdateRecipe/UpdateRecipe'
-import retrieveRecipes from './api/retrieveRecipes'
-import RecipeType from './types/Recipe'
 
 const App = () => {
-  const [recipes, setRecipes] = useState<RecipeType[]>([])
-
-  const retrieveAndSetRecipes = async () => {
-    try {
-      const newRecipes = await retrieveRecipes()
-      setRecipes(newRecipes)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  useEffect(() => {
-    retrieveAndSetRecipes()
-  }, [])
   
   return (
     <Router>
@@ -32,11 +15,11 @@ const App = () => {
       <Banner><Link disableStyling={true} to='/'>Recipe Manager</Link></Banner>
       <Switch>
         <Route exact path='/' render={
-          () => <Home recipes={recipes} />} />
+          () => <Home />} />
         <Route exact path='/add_recipe' render={
-          () => <AddRecipe recipes={recipes} setRecipes={setRecipes} />} />
+          () => <AddRecipe />} />
         <Route exact path='/:id' render={
-          () => <Recipe recipes={recipes} setRecipes={setRecipes} />} />
+          () => <Recipe />} />
         <Route exact path='/:id/update' render={
           () => <UpdateRecipe />} />
       </Switch>

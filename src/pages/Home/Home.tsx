@@ -1,22 +1,31 @@
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
-import { RouteComponentProps } from '@reach/router'
 
 import RecipeList from '../../containers/RecipeList/RecipeList'
 import { Section, Button, HeaderText } from '../../components'
 import Recipe from '../../types/Recipe'
+import retrieveRecipes from '../../api/retrieveRecipes'
 
-interface Props extends RouteComponentProps {
-    recipes: Recipe[]
-}
-
-const Home = (props: Props) => {
+const Home = () => {
+    const [recipes, setRecipes] = useState<Recipe[]>([])
     const history = useHistory()
-
-    const { recipes } = props
 
     const handleClick = () => {
         history.push('/add_recipe')
     }
+
+    const retrieveAndSetRecipes = async () => {
+        try {
+          const newRecipes = await retrieveRecipes()
+          setRecipes(newRecipes)
+        } catch (err) {
+          console.error(err)
+        }
+      }
+
+    useEffect(() => {
+        retrieveAndSetRecipes()
+      }, [])
 
     return (
         <Section>

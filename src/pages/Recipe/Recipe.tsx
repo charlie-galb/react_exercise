@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom';
-import { RouteComponentProps } from '@reach/router'
 
 import retrieveAndSetRecipe from '../../utils/retrieveAndSetRecipe'
 import deleteRecipe from '../../api/deleteRecipe'
@@ -10,15 +9,9 @@ import {
     HeaderText, Button, Para, SubHeaderText, List, Section, FlexContainer, StyledDiv 
 } from '../../components'
 
-interface Props extends RouteComponentProps {
-    recipes: RecipeType[]
-    setRecipes: (recipes: RecipeType[]) => void
-}
-
-const Recipe = (props: Props) => {
+const Recipe = () => {
     const { id } = useParams<{ id: string }>()
     const [recipe, setRecipe] = useState<RecipeType>()
-    const { recipes, setRecipes } = props
     const history = useHistory()
 
     const handleUpdate = () => {
@@ -29,10 +22,6 @@ const Recipe = (props: Props) => {
         event.preventDefault()
         try {
             await deleteRecipe(id)
-            const currentId = parseInt(id)
-            let newRecipes = recipes
-            newRecipes = newRecipes.filter((recipe: RecipeType) => recipe.id !== currentId)
-            setRecipes(newRecipes)
             history.push('/')
         } catch (err) {
             console.error(err)

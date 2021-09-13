@@ -4,14 +4,12 @@ import { Route } from 'react-router-dom'
 
 import Recipe from './Recipe'
 import renderWithRouter from '../../utils/testUtils/renderWithRouter'
-import { recipe1, recipe2, recipeArr } from '../../data/testData'
+import { recipe1 } from '../../data/testData'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
-const mockRecipes = recipeArr
-const mockSetRecipes = jest.fn()
 const component = <Route path='/:id'>
-                    <Recipe recipes={mockRecipes} setRecipes={mockSetRecipes} />
+                    <Recipe />
                 </Route>
 
 describe('Recipe', () => {
@@ -41,10 +39,6 @@ describe('Recipe', () => {
         fireEvent.click(getByText('Delete'))
         await act(() => Promise.resolve())
         expect(mockedAxios.delete).toBeCalledTimes(1)
-        expect(mockSetRecipes).toBeCalledTimes(1)
-        expect(mockSetRecipes).toBeCalledWith([
-            recipe2
-        ])
         expect(history.location.pathname).toEqual('/')
     })
     it('Routes to "/:id/update" path when update button is pressed', async () => {
