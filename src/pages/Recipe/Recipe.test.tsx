@@ -1,4 +1,4 @@
-import { screen, act, fireEvent } from '@testing-library/react'
+import { screen, act, fireEvent, waitFor } from '@testing-library/react'
 import axios from 'axios'
 import { Route } from 'react-router-dom'
 
@@ -19,8 +19,7 @@ describe('Recipe', () => {
         component, 
         '/1'
         )
-        await act(() => Promise.resolve())
-        expect(mockedAxios.get).toBeCalledTimes(1)
+        await waitFor(() => expect(mockedAxios.get).toBeCalledTimes(1))
         expect(screen.getByText('Nice cake')).not.toBeNull()
         expect(screen.getByText('A lovely bit of cake')).not.toBeNull()
         expect(screen.getByText('Sugar')).not.toBeNull()
@@ -33,12 +32,11 @@ describe('Recipe', () => {
             component, 
             '/1'
             )
-        await act(() => Promise.resolve())
+        await waitFor(() => expect(mockedAxios.get).toBeCalledTimes(1))
         expect(mockedAxios.get).toBeCalledTimes(1)
         expect(getByText('Nice cake')).not.toBeNull()
         fireEvent.click(getByText('Delete'))
-        await act(() => Promise.resolve())
-        expect(mockedAxios.delete).toBeCalledTimes(1)
+        await waitFor(() => expect(mockedAxios.delete).toBeCalledTimes(1))
         expect(history.location.pathname).toEqual('/')
     })
     it('Routes to "/:id/update" path when update button is pressed', async () => {
@@ -47,9 +45,8 @@ describe('Recipe', () => {
             component, 
             '/1'
             )
-        await act(() => Promise.resolve())
+        await waitFor(() => expect(mockedAxios.get).toBeCalledTimes(1))
         fireEvent.click(getByText('Update'))
-        await act(() => Promise.resolve())
-        expect(history.location.pathname).toEqual('/1/update')
+        await waitFor(() => expect(history.location.pathname).toEqual('/1/update'))
     })
 })
