@@ -4,13 +4,33 @@ import { Route } from 'react-router-dom'
 
 import Recipe from './Recipe'
 import renderWithRouter from '../../utils/testUtils/renderWithRouter'
-import { recipe1 } from '../../data/testData'
+import RecipeType from '../../types/Recipe'
+import Ingredient from '../../types/Ingredient'
 
 jest.mock('axios')
+
 const mockedAxios = axios as jest.Mocked<typeof axios>
-const component = <Route path='/:id'>
-                    <Recipe />
-                </Route>
+const component = <Route path='/:id'><Recipe /></Route>
+
+const ingredient1: Ingredient = {
+    id: 1,
+    name: 'Sugar'
+}
+
+const ingredient2: Ingredient = {
+    id: 2,
+    name: 'Flour'
+}
+
+const recipe1: RecipeType = {
+    id: 1,
+    name: 'Nice cake',
+    description: 'A lovely bit of cake',
+    ingredients: [
+        ingredient1,
+        ingredient2
+    ]
+}
 
 describe('Recipe', () => {
     it('Retrieves the recipe from the backend and displays the data', async () => {

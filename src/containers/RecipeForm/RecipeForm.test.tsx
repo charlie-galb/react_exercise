@@ -1,8 +1,28 @@
 import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
 
 import RecipeForm from './RecipeForm'
-import { recipe1 } from '../../data/testData'
-import { ReactChild } from 'react'
+import RecipeType from '../../types/Recipe'
+import Ingredient from '../../types/Ingredient'
+
+const ingredient1: Ingredient = {
+    id: 1,
+    name: 'Sugar'
+}
+
+const ingredient2: Ingredient = {
+    id: 2,
+    name: 'Flour'
+}
+
+const recipe1: RecipeType = {
+    id: 1,
+    name: 'Nice cake',
+    description: 'A lovely bit of cake',
+    ingredients: [
+        ingredient1,
+        ingredient2
+    ]
+}
 
 describe('RecipeForm', () => {
 

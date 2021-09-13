@@ -3,14 +3,35 @@ import axios from 'axios'
 import { Route } from 'react-router-dom'
 
 import UpdateRecipe from './UpdateRecipe'
-import { recipe2 } from '../../data/testData'
 import renderWithRouter from '../../utils/testUtils/renderWithRouter'
+import Recipe from '../../types/Recipe'
+import Ingredient from '../../types/Ingredient'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 const component = <Route path='/:id/update'>
-                    <UpdateRecipe />
-                </Route>
+                <UpdateRecipe />
+            </Route>
+
+const ingredient1: Ingredient = {
+    id: 1,
+    name: 'Sugar'
+}
+
+const ingredient3: Ingredient = {
+    id: 3,
+    name: 'Cyanide'
+}
+
+const recipe2: Recipe = {
+    id: 2,
+    name: 'Bad cake',
+    description: 'May cause death',
+    ingredients: [
+        ingredient1,
+        ingredient3
+    ]
+}
 
 describe('UpdateRecipe', () => {
     it('Displays a flash notice if it fails to retrieve the recipe', async () => {

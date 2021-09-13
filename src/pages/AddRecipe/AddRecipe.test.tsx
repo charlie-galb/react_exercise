@@ -3,14 +3,35 @@ import axios from 'axios'
 import { Route } from 'react-router-dom'
 
 import AddRecipe from './AddRecipe'
-import { recipe2 } from '../../data/testData'
 import renderWithRouter from '../../utils/testUtils/renderWithRouter'
+import Recipe from '../../types/Recipe'
+import Ingredient from '../../types/Ingredient'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 const component = <Route path='/add_recipe'>
                     <AddRecipe />
                 </Route>
+    
+const ingredient1: Ingredient = {
+    id: 1,
+    name: 'Sugar'
+}
+
+const ingredient3: Ingredient = {
+    id: 3,
+    name: 'Cyanide'
+}
+
+const recipe2: Recipe = {
+    id: 2,
+    name: 'Bad cake',
+    description: 'May cause death',
+    ingredients: [
+        ingredient1,
+        ingredient3
+    ]
+}
 
 describe('AddRecipe', () => {
     it('Sends Post request to backend when submit button is pressed', async () => {
