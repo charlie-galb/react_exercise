@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-function App() {
+import GlobalStyle from './GlobalStyle';
+import { Banner, Link } from './components'
+import Home from './pages/Home/Home'
+import AddRecipe from './pages/AddRecipe/AddRecipe'
+import Recipe from './pages/Recipe/Recipe'
+import UpdateRecipe from './pages/UpdateRecipe/UpdateRecipe'
+
+const App = () => {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <GlobalStyle />
+      <Banner><Link disableStyling={true} to='/'>Recipe Manager</Link></Banner>
+      <Switch>
+        <Route exact path='/' render={
+          () => <Home />} />
+        <Route exact path='/add_recipe' render={
+          () => <AddRecipe />} />
+        <Route exact path='/:id' render={
+          () => <Recipe />} />
+        <Route exact path='/:id/update' render={
+          () => <UpdateRecipe />} />
+      </Switch>
+    </Router>
   );
 }
 
