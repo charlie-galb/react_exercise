@@ -18,7 +18,7 @@ const RecipeForm = (props: Props) => {
     const [renderNotice, setRenderNotice] = useState(false)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [ingredients, setIngredients] = useState<Array<{id: string, name: string}>>([{id: uuidv4(), name: ''}])
+    const [ingredients, setIngredients] = useState<Array<{id: string|number, name: string}>>([])
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
@@ -43,15 +43,18 @@ const RecipeForm = (props: Props) => {
     }
 
     const handleIngredientsChange = (index:  number) => (event: React.FormEvent<HTMLInputElement>): void => {
-        let currentIngredients = [...ingredients]
-        currentIngredients[index]['name'] = event.currentTarget.value 
-        setIngredients([...currentIngredients])
+        if (ingredients) {
+            let currentIngredients = ingredients
+            currentIngredients[index]['name'] = event.currentTarget.value 
+            setIngredients(currentIngredients)
+        }
     }
 
     const handleAddIngredient = (event: React.FormEvent) => {
         event.preventDefault()
         let currentIngredients = [...ingredients]
-        setIngredients([...currentIngredients, {id: uuidv4(), name: ''}])
+        let newIngredient = {id: uuidv4(), name: ''}
+        setIngredients([...currentIngredients, newIngredient])
     }
 
     const handleRemoveIngredient = (event: React.FormEvent) => {
@@ -65,13 +68,7 @@ const RecipeForm = (props: Props) => {
         if (recipe) {
             setName(recipe.name)
             setDescription(recipe.description)
-            const unidentifiedIngredients = recipe.ingredients.map((ingredient) => {
-                return {
-                    id: uuidv4(),
-                    name: ingredient.name || ''
-                }
-            })
-            setIngredients(unidentifiedIngredients)
+            setIngredients(recipe.ingredients)
         }
     }, [recipe])
 
@@ -92,8 +89,8 @@ const RecipeForm = (props: Props) => {
                 onChange={handleDescriptionChange} 
                 required />
                 <LabelText>Ingredients</LabelText>
-                {ingredients.map((ingredient, index) => (
-                    <StyledSpan key={index}>
+                {ingredients && ingredients.map((ingredient, index) => (
+                    <StyledSpan key={ingredient.id}>
                         <Input 
                         type='text' 
                         data-testid={`ingredient${index+1}-name-input`}

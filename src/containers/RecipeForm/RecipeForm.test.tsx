@@ -33,6 +33,7 @@ describe('RecipeForm', () => {
     const fillOutFields = () => {
         const nameField = screen.getByTestId('recipe-name-input')
         const descriptionField = screen.getByTestId('recipe-description-input')
+        fireEvent.click(screen.getByText('Add ingredient'))
         const ingredientsField = screen.getByTestId('ingredient1-name-input')
         fireEvent.change(nameField, {target: {value: 'Bangers and mash'}})
         fireEvent.change(
@@ -49,7 +50,7 @@ describe('RecipeForm', () => {
         setupComponent()
         expect(screen.getByTestId('recipe-name-input')).toHaveValue('')
         expect(screen.getByTestId('recipe-description-input')).toHaveValue('')
-        expect(screen.getByTestId('ingredient1-name-input')).toHaveValue('')
+        expect(screen.queryByTestId('ingredient1-name-input')).toBeNull()
     })
     it('Will not submit and displays flash notice if "name" and "description" fields are blank', () => {
         setupComponent()

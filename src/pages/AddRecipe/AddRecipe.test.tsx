@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from '@testing-library/react'
+import { fireEvent, waitFor, screen } from '@testing-library/react'
 import axios from 'axios'
 import { Route } from 'react-router-dom'
 
@@ -45,6 +45,7 @@ describe('AddRecipe', () => {
             getByTestId('recipe-description-input'), {target: {
                 value: 'Cook sausages and mashed potato and mix together.'
             }})
+        fireEvent.click(screen.getByText('Add ingredient'))
         fireEvent.change(
             getByTestId('ingredient1-name-input'), {target: {
                 value: 'Bangers'
@@ -66,6 +67,7 @@ describe('AddRecipe', () => {
             getByTestId('recipe-description-input'), {target: {
                 value: 'Cook sausages and mashed potato and mix together.'
             }})
+        fireEvent.click(screen.getByText('Add ingredient'))
         fireEvent.change(
             getByTestId('ingredient1-name-input'), {target: {
                 value: 'Bangers'

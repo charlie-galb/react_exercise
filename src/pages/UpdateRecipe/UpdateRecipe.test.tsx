@@ -50,6 +50,11 @@ describe('UpdateRecipe', () => {
         component,
         `/${recipe2.id}/update`
         )
+        await waitFor(() => {
+            expect(getByTestId('recipe-name-input')).toHaveValue(recipe2.name)
+            expect(getByTestId('recipe-description-input')).toHaveValue(recipe2.description)
+            expect(getByTestId('ingredient1-name-input')).toHaveValue(recipe2.ingredients[0].name)
+        })
         fireEvent.change(getByTestId('recipe-name-input'), {target: {value: 'Bangers and mash'}})
         fireEvent.change(
             getByTestId('recipe-description-input'), {target: {
@@ -59,6 +64,7 @@ describe('UpdateRecipe', () => {
             getByTestId('ingredient1-name-input'), {target: {
                 value: 'Bangers'
             }})
+        fireEvent.click(getByText('Remove ingredient'))
         fireEvent.click(getByText('Submit'))
         await waitFor(() => {
             expect(mockedAxios.patch).toHaveBeenCalledTimes(1)
